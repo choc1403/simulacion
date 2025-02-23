@@ -1,0 +1,18 @@
+-d
+"C:\\Users\\eloic\\OneDrive\\Escritorio\\DESARROLLO\\MODELACION 1\\Laboratorio\\build\\classes"
+-classpath
+"C:\\Users\\eloic\\OneDrive\\Escritorio\\DESARROLLO\\MODELACION 1\\Laboratorio\\build\\classes"
+-sourcepath
+"C:\\Users\\eloic\\OneDrive\\Escritorio\\DESARROLLO\\MODELACION 1\\Laboratorio\\build\\empty"
+-target
+22
+-encoding
+UTF-8
+-g
+-processorpath
+"C:\\Users\\eloic\\OneDrive\\Escritorio\\DESARROLLO\\MODELACION 1\\Laboratorio\\build\\empty"
+-s
+"C:\\Users\\eloic\\OneDrive\\Escritorio\\DESARROLLO\\MODELACION 1\\Laboratorio\\build\\generated-sources\\ap-source-output"
+-source
+22
+"C:\\Users\\eloic\\OneDrive\\Escritorio\\DESARROLLO\\MODELACION 1\\Laboratorio\\src\\probabilidad\\Hipergeometrica.java"
