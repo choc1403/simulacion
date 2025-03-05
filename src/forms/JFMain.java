@@ -178,9 +178,9 @@ public class JFMain extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(jtxtLambda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addGap(27, 27, 27)
                 .addComponent(jButton1)
-                .addGap(36, 36, 36))
+                .addContainerGap(174, Short.MAX_VALUE))
         );
 
         pack();
@@ -200,6 +200,8 @@ public class JFMain extends javax.swing.JFrame {
             int x = jtxtX.getText().trim().isEmpty() ? 0 : Integer.parseInt(jtxtX.getText().trim());
             int N = jtxtN.getText().trim().isEmpty() ? 0 : Integer.parseInt(jtxtN.getText().trim());
             int k = jtxtK.getText().trim().isEmpty() ? 0 : Integer.parseInt(jtxtK.getText().trim());
+            
+            String distribucion = "";
 
             // Asignar valores a la clase Datos
             datos.setPoblacion(N);
@@ -214,12 +216,14 @@ public class JFMain extends javax.swing.JFrame {
 
                 if (verificacion_distribucion >= 0.2) {
                     JOptionPane.showMessageDialog(rootPane, "Distribución Hipergeométrica");
+                    distribucion = "Distribución Hipergeométrica";
                 } else {
                     double media = n * p;
                     lambda = media;
 
                     if (p < 0.1 || media < 10) {
                         JOptionPane.showMessageDialog(rootPane, "Distribución de Poisson");
+                        distribucion = "Distribución de Poisson";
 
                         if (k == 0 && x == 0) {
                             JOptionPane.showMessageDialog(rootPane, "Error: Debes ingresar valores de k o x.");
@@ -230,6 +234,7 @@ public class JFMain extends javax.swing.JFrame {
                         asignacion_valores_distribucion_poisson(lambda, k);
                     } else {
                         JOptionPane.showMessageDialog(rootPane, "Distribución Binomial");
+                        distribucion = "Distribución Binomial";
                     }
                 }
             } else {
@@ -238,6 +243,7 @@ public class JFMain extends javax.swing.JFrame {
 
                 if (p < 0.1 || media < 10) {
                     JOptionPane.showMessageDialog(rootPane, "Distribución de Poisson");
+                    distribucion = "Distribución de Poisson";
 
                     if (k == 0 && x == 0) {
                         JOptionPane.showMessageDialog(rootPane, "Error: Debes ingresar valores de k o x.");
@@ -248,8 +254,23 @@ public class JFMain extends javax.swing.JFrame {
                     asignacion_valores_distribucion_poisson(lambda, k);
                 } else {
                     JOptionPane.showMessageDialog(rootPane, "Distribución Binomial");
+                    distribucion = "Distribución Binomial";
                 }
             }
+            // Datos para la tabla
+            String[] columnas = {"Parámetro", "Valor"};
+            Object[][] datos = {
+                {"Distribución", distribucion},
+                {"P (Probabilidad de éxito)", p},
+                {"Q (Probabilidad de fracaso)", q},
+                {"N (Población)", N},
+                {"n (Muestra)", n},
+                {"x (Éxitos en muestra)", x},
+                {"k (Éxitos en población)", k}
+            };
+
+            // Mostrar la tabla en una nueva ventana
+            new ResultadosFrame(datos, columnas);
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(rootPane, "Error: Ingrese valores numéricos válidos.");
