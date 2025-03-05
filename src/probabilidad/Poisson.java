@@ -83,19 +83,13 @@ public class Poisson {
         return k - 1;
     }
 
-    /**
-     * Calcula la media de la distribución de Poisson (que es igual a lambda)
-     * @return Media de la distribución
-     */
-    public double mean() {
+    
+    public double media() {
         return lambda;
     }
 
-    /**
-     * Calcula la varianza de la distribución de Poisson (que es igual a lambda)
-     * @return Varianza de la distribución
-     */
-    public double variance() {
+    
+    public double varianza(){
         return lambda;
     }
     

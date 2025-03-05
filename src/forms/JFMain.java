@@ -45,11 +45,10 @@ public class JFMain extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jtxtN = new javax.swing.JTextField();
+        jtxt_n = new javax.swing.JTextField();
         jtxtP = new javax.swing.JTextField();
         jtxtX = new javax.swing.JTextField();
-        jtxtNN = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
+        jtxtN = new javax.swing.JTextField();
         jrExacta = new javax.swing.JRadioButton();
         jrAHasta = new javax.swing.JRadioButton();
         jrAMenor = new javax.swing.JRadioButton();
@@ -59,6 +58,8 @@ public class JFMain extends javax.swing.JFrame {
         jtxtQ = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jtxtK = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jtxtLambda = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -79,8 +80,6 @@ public class JFMain extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setText("Resultados:");
-
         jrExacta.setText("Probabilidad exacta X =");
 
         jrAHasta.setText("Probabilidad acumulada hasta   X <= ");
@@ -95,11 +94,13 @@ public class JFMain extends javax.swing.JFrame {
 
         jLabel7.setText("Numero de Individuos (K): ");
 
+        jLabel8.setText("Lambda (λ):");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(32, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -115,7 +116,7 @@ public class JFMain extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jtxtP, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
                                 .addComponent(jtxtQ))
-                            .addComponent(jtxtN, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jtxt_n, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -123,11 +124,13 @@ public class JFMain extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jtxtNN, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
-                            .addComponent(jtxtK))))
+                            .addComponent(jtxtN, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
+                            .addComponent(jtxtK)
+                            .addComponent(jtxtLambda))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jrExacta)
@@ -136,10 +139,6 @@ public class JFMain extends javax.swing.JFrame {
                     .addComponent(jrAcu)
                     .addComponent(jrAMayor))
                 .addGap(14, 14, 14))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jLabel5)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,7 +146,7 @@ public class JFMain extends javax.swing.JFrame {
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jtxtN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtxt_n, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jrExacta))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -168,16 +167,18 @@ public class JFMain extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jrAMayor)
                     .addComponent(jLabel4)
-                    .addComponent(jtxtNN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtxtN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jtxtK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jtxtLambda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addComponent(jButton1)
-                .addGap(5, 5, 5)
-                .addComponent(jLabel5)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addGap(36, 36, 36))
         );
 
         pack();
@@ -187,7 +188,13 @@ public class JFMain extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
 
-        JOptionPane.showMessageDialog(rootPane, "Hola");
+        double p = jtxtP.getText().isEmpty() ? 0 : Double.parseDouble(jtxtP.getText());
+        double q = jtxtQ.getText().isEmpty() ? 0 : Double.parseDouble(jtxtQ.getText());
+        int n = jtxt_n.getText().isEmpty() ? 0 : Integer.parseInt(jtxt_n.getText());
+        int x = jtxtX.getText().isEmpty() ? 0 : Integer.parseInt(jtxtX.getText());
+        int N =  jtxtN.getText().isEmpty() ? 0 : Integer.parseInt(jtxtN.getText());
+        int k = jtxtK.getText().isEmpty() ? 0 : Integer.parseInt(jtxtK.getText());
+        int lambda = jtxtLambda.getText().isEmpty() ? 0 : Integer.parseInt(jtxtLambda.getText());
 
 
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -233,19 +240,20 @@ public class JFMain extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JRadioButton jrAHasta;
     private javax.swing.JRadioButton jrAMayor;
     private javax.swing.JRadioButton jrAMenor;
     private javax.swing.JRadioButton jrAcu;
     private javax.swing.JRadioButton jrExacta;
     private javax.swing.JTextField jtxtK;
+    private javax.swing.JTextField jtxtLambda;
     private javax.swing.JTextField jtxtN;
-    private javax.swing.JTextField jtxtNN;
     private javax.swing.JTextField jtxtP;
     private javax.swing.JTextField jtxtQ;
     private javax.swing.JTextField jtxtX;
+    private javax.swing.JTextField jtxt_n;
     // End of variables declaration//GEN-END:variables
 }
