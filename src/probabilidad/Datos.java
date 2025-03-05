@@ -102,9 +102,8 @@ public class Datos {
     }
 
     // Método para calcular sesgo
-    public double sesgo() {
-        double p = getProb_exito();
-        double q = getProb_fracaso();
+    public double sesgo(double p, double q, int muestra) {
+        
 
         if (muestra == 0 || p == 0 || q == 0) {
             throw new ArithmeticException("No se puede calcular el sesgo con valores nulos o cero.");

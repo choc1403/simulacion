@@ -246,6 +246,7 @@ public class JFMain extends javax.swing.JFrame {
                             n = (int) (media / p);
                         } else if (n != 0) {
                             p = (double) (media / n);
+                            q = 1- p;
                             datos.setProb_exito(p);
 
                         }
@@ -274,7 +275,7 @@ public class JFMain extends javax.swing.JFrame {
 
                         distribucion = "Distribución Binomial";
                         
-                        resultado = asignacion_valores_distribucion_binomial().probabilidad_exacta(x);
+                        resultado = asignacion_valores_distribucion_binomial().probabilidad_exacta(p,x,q,n);
 
                         if (verificacion_distribucion < 0.5) {
                             // INFINITA
@@ -293,8 +294,10 @@ public class JFMain extends javax.swing.JFrame {
                     media = lambda;
                     if (p != 0) {
                         n = (int) (media / p);
+                        System.out.println("n = " + n);
                     } else if (n != 0) {
                         p = (double) (media / n);
+                        q = 1- p;
                         datos.setProb_exito(p);
 
                     }
@@ -323,7 +326,8 @@ public class JFMain extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(rootPane, "Distribución Binomial");
                     distribucion = "Distribución Binomial";
                     
-                    resultado = asignacion_valores_distribucion_binomial().probabilidad_exacta(x);
+                    resultado = asignacion_valores_distribucion_binomial().probabilidad_exacta(p,x,q,n);
+                    System.out.println("resultado = " + resultado);
 
                     desviacion_estandar = asignacion_valores_distribucion_binomial().desviacion();
 
@@ -341,7 +345,7 @@ public class JFMain extends javax.swing.JFrame {
                 {"k (Éxitos en población)", k},
                 {"P (Probabilidad)", resultado},
                 {"Poblacion Finita", finita},
-                {"Poblacion Finita", infinita},
+                {"Poblacion Infinita", infinita},
                 //{"Sesgo", datos.sesgo()},
                 //{"Curtosis", datos.curtosis()},
                 {"Media", media},
