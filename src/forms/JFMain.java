@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.table.DefaultTableModel;
+import forms.ResultadosFrame;
 
 public class JFMain extends javax.swing.JFrame {
 
@@ -18,9 +19,15 @@ public class JFMain extends javax.swing.JFrame {
      */
     Datos datos = new Datos();
 
-    public void asignacion_valores_distribucion_poisson(double lambda, int k) {
+    public Poisson asignacion_valores_distribucion_poisson(double lambda, int k) {
         Poisson poisson = new Poisson(lambda);
+        return poisson;
 
+    }
+
+    public Binomial asignacion_valores_distribucion_binomial() {
+        Binomial binomial = new Binomial();
+        return binomial;
     }
 
     public JFMain() {
@@ -200,14 +207,29 @@ public class JFMain extends javax.swing.JFrame {
             int x = jtxtX.getText().trim().isEmpty() ? 0 : Integer.parseInt(jtxtX.getText().trim());
             int N = jtxtN.getText().trim().isEmpty() ? 0 : Integer.parseInt(jtxtN.getText().trim());
             int k = jtxtK.getText().trim().isEmpty() ? 0 : Integer.parseInt(jtxtK.getText().trim());
-            
+
+            // ---- Mandar los resultados
+            double resultado = 0;
+            double finita = 0;
+            double infinita = 0;
+            double media = 0;
+            double desviacion_estandar = 0;
+
             String distribucion = "";
 
             // Asignar valores a la clase Datos
             datos.setPoblacion(N);
             datos.setMuestra(n);
-            datos.setProb_exito(p);
-            datos.setProb_fracaso(q);
+
+            if (p != 0) {
+
+                datos.setProb_exito(p);
+                q = 1 - p;
+            } else if (q != 0) {
+                p = 1 - q;
+                datos.setProb_fracaso(q);
+            }
+
             datos.setExitos_rango(x);
             datos.setExitos_poblacion(k);
 
@@ -218,8 +240,21 @@ public class JFMain extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(rootPane, "Distribución Hipergeométrica");
                     distribucion = "Distribución Hipergeométrica";
                 } else {
-                    double media = n * p;
-                    lambda = media;
+                    if (lambda != 0) {
+                        media = lambda;
+                        if (p != 0) {
+                            n = (int) (media / p);
+                        } else if (n != 0) {
+                            p = (double) (media / n);
+                            datos.setProb_exito(p);
+
+                        }
+
+                    } else {
+                        media = n * p;
+                        lambda = media;
+
+                    }
 
                     if (p < 0.1 || media < 10) {
                         JOptionPane.showMessageDialog(rootPane, "Distribución de Poisson");
@@ -232,14 +267,43 @@ public class JFMain extends javax.swing.JFrame {
                         k = (k != 0) ? k : x;  // Si k es 0, usa x como respaldo
 
                         asignacion_valores_distribucion_poisson(lambda, k);
+                        resultado = asignacion_valores_distribucion_poisson(lambda, k).poissonProbability(k);
+                        desviacion_estandar = asignacion_valores_distribucion_poisson(lambda, k).desviacion_estandar(x, media, n);
                     } else {
                         JOptionPane.showMessageDialog(rootPane, "Distribución Binomial");
+
                         distribucion = "Distribución Binomial";
+                        
+                        resultado = asignacion_valores_distribucion_binomial().probabilidad_exacta(x);
+
+                        if (verificacion_distribucion < 0.5) {
+                            // INFINITA
+                            desviacion_estandar = asignacion_valores_distribucion_binomial().desviacion();
+
+                        } else {
+                            // FINITA
+                            finita = asignacion_valores_distribucion_binomial().factor_correcion();
+                            desviacion_estandar = asignacion_valores_distribucion_binomial().desviacion();
+                        }
+
                     }
                 }
             } else {
-                double media = n * p;
-                lambda = media;
+                if (lambda != 0) {
+                    media = lambda;
+                    if (p != 0) {
+                        n = (int) (media / p);
+                    } else if (n != 0) {
+                        p = (double) (media / n);
+                        datos.setProb_exito(p);
+
+                    }
+
+                } else {
+                    media = n * p;
+                    lambda = media;
+
+                }
 
                 if (p < 0.1 || media < 10) {
                     JOptionPane.showMessageDialog(rootPane, "Distribución de Poisson");
@@ -252,25 +316,39 @@ public class JFMain extends javax.swing.JFrame {
                     k = (k != 0) ? k : x;  // Si k es 0, usa x como respaldo
 
                     asignacion_valores_distribucion_poisson(lambda, k);
+                    resultado = asignacion_valores_distribucion_poisson(lambda, k).poissonProbability(k);
+
+                    desviacion_estandar = asignacion_valores_distribucion_poisson(lambda, k).desviacion_estandar(x, media, n);
                 } else {
                     JOptionPane.showMessageDialog(rootPane, "Distribución Binomial");
                     distribucion = "Distribución Binomial";
+                    
+                    resultado = asignacion_valores_distribucion_binomial().probabilidad_exacta(x);
+
+                    desviacion_estandar = asignacion_valores_distribucion_binomial().desviacion();
+
                 }
             }
             // Datos para la tabla
             String[] columnas = {"Parámetro", "Valor"};
-            Object[][] datos = {
+            Object[][] data = {
                 {"Distribución", distribucion},
-                {"P (Probabilidad de éxito)", p},
-                {"Q (Probabilidad de fracaso)", q},
+                {"P (Probabilidad de éxito)", datos.getProb_exito()},
+                {"Q (Probabilidad de fracaso)", datos.getProb_fracaso()},
                 {"N (Población)", N},
                 {"n (Muestra)", n},
                 {"x (Éxitos en muestra)", x},
-                {"k (Éxitos en población)", k}
-            };
+                {"k (Éxitos en población)", k},
+                {"P (Probabilidad)", resultado},
+                {"Poblacion Finita", finita},
+                {"Poblacion Finita", infinita},
+                //{"Sesgo", datos.sesgo()},
+                //{"Curtosis", datos.curtosis()},
+                {"Media", media},
+                {"Desviacion Estandar", desviacion_estandar},};
 
             // Mostrar la tabla en una nueva ventana
-            new ResultadosFrame(datos, columnas);
+            new ResultadosFrame(data, columnas);
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(rootPane, "Error: Ingrese valores numéricos válidos.");
