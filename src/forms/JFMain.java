@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package forms;
 
 import probabilidad.Datos;
@@ -14,10 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author eloic
- */
+
 public class JFMain extends javax.swing.JFrame {
 
     /**
@@ -33,17 +27,9 @@ public class JFMain extends javax.swing.JFrame {
         grupoBotones.add(jrAMayor);
     }
 
-    private void c_binomial(int poblacion, int muestra, int exitos_rango, double prob_exito, double prob_fracaso) {
-        Binomial binomial = new Binomial(poblacion, muestra, exitos_rango, prob_exito, prob_fracaso);
-        
+    
 
-    }
-
-    private void c_hipergeometrica(int poblacion, int muestra, int exitos_rango, int exitos_poblacion) {
-        Hipergeometrica hipergeometrica = new Hipergeometrica(poblacion, muestra, exitos_rango, exitos_poblacion);
-        System.out.println("PROBABILIDAD: "+hipergeometrica.calcularProbabilidad());
-
-    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -221,10 +207,10 @@ public class JFMain extends javax.swing.JFrame {
 
         if (verificacion_formula >= 0.2) {
             System.out.println("HIPERGEOMETRICA");
-            c_hipergeometrica( poblacion,  muestra,  exitos_rango,  exitos_poblacion);
+            //c_hipergeometrica( poblacion,  muestra,  exitos_rango,  exitos_poblacion);
         } else {
             System.out.println("BINOMIAL");
-            c_binomial( poblacion,  muestra,  exitos_rango,  prob_exito,  prob_fracaso);
+            //c_binomial( poblacion,  muestra,  exitos_rango,  prob_exito,  prob_fracaso);
         }
 
 

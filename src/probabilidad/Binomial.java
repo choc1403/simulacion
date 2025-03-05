@@ -1,18 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package probabilidad;
 
-/**
- *
- * @author eloic
- */
+
 public class Binomial extends Datos{
-    
-    public Binomial(int poblacion, int muestra, int exitos_rango, double prob_exito, double prob_fracaso) {
-        super(poblacion, muestra, exitos_rango, prob_exito, prob_fracaso);
+
+    public Binomial() {
     }
+    
+    
     
     // Método para calcular el coeficiente binomial
     public double coeficiente_binomial(int x) {

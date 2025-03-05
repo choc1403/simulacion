@@ -6,27 +6,75 @@ package probabilidad;
  */
 public class Datos {
 
-    private int poblacion = 0; // N (Tamaño total de la población)
-    private int muestra = 0;   // n (Tamaño de la muestra)
-    private int exitos_rango = 0; // x (Éxitos en la muestra)
-    private double prob_exito = 0; // p (Probabilidad de éxito, solo para binomial)
-    private double prob_fracaso = 0; // q (Probabilidad de fracaso, solo para binomial)
-    private int exitos_poblacion = 0; // K (Éxitos totales en la población, solo para hipergeométrica)
+    private int poblacion = 0; 
+    private int muestra = 0;   
+    private int exitos_rango = 0; 
+    private double prob_exito = -1; // Inicializamos en -1 para indicar que no se ha calculado
+    private double prob_fracaso = -1;
+    private int exitos_poblacion = 0; 
 
-    // Constructor para distribución binomial
-    public Datos(int poblacion, int muestra, int exitos_rango, double prob_exito, double prob_fracaso) {
-        this.poblacion = poblacion;
-        this.muestra = muestra;
-        this.exitos_rango = exitos_rango;
-        this.prob_exito = prob_exito;
-        this.prob_fracaso = prob_fracaso;
+    public Datos() {
     }
 
-    // Constructor para distribución hipergeométrica
-    public Datos(int poblacion, int muestra, int exitos_rango, int exitos_poblacion) {
+    public int getPoblacion() {
+        return poblacion;
+    }
+
+    public void setPoblacion(int poblacion) {
         this.poblacion = poblacion;
+    }
+
+    public int getMuestra() {
+        return muestra;
+    }
+
+    public void setMuestra(int muestra) {
         this.muestra = muestra;
+    }
+
+    public int getExitos_rango() {
+        return exitos_rango;
+    }
+
+    public void setExitos_rango(int exitos_rango) {
         this.exitos_rango = exitos_rango;
+    }
+
+    public double getProb_exito() {
+        if (prob_exito == -1) { // Solo calcular si no ha sido asignado
+            if (poblacion != 0 && exitos_poblacion != 0) {
+                prob_exito = (double) exitos_poblacion / poblacion;
+            } else if (prob_fracaso != -1) {
+                prob_exito = 1 - prob_fracaso;
+            }
+        }
+        return prob_exito;
+    }
+
+    public void setProb_exito(double prob_exito) {
+        this.prob_exito = prob_exito;
+        this.prob_fracaso = 1 - prob_exito; // Ajustar automáticamente probabilidad de fracaso
+    }
+
+    public double getProb_fracaso() {
+        if (prob_fracaso == -1) {
+            if (prob_exito != -1) {
+                prob_fracaso = 1 - prob_exito;
+            }
+        }
+        return prob_fracaso;
+    }
+
+    public void setProb_fracaso(double prob_fracaso) {
+        this.prob_fracaso = prob_fracaso;
+        this.prob_exito = 1 - prob_fracaso; // Ajustar automáticamente probabilidad de éxito
+    }
+
+    public int getExitos_poblacion() {
+        return exitos_poblacion;
+    }
+
+    public void setExitos_poblacion(int exitos_poblacion) {
         this.exitos_poblacion = exitos_poblacion;
     }
 
@@ -44,81 +92,27 @@ public class Datos {
         return factoria;
     }
 
-    public void setPoblacion(int poblacion) {
-        this.poblacion = poblacion;
-    }
+    // Método para calcular sesgo
+    public double sesgo() {
+        double p = getProb_exito();
+        double q = getProb_fracaso();
 
-    public void setMuestra(int muestra) {
-        this.muestra = muestra;
-    }
-
-    public void setExitos_rango(int exitos_rango) {
-        this.exitos_rango = exitos_rango;
-    }
-
-    public void setProb_exito(double prob_exito) {
-        this.prob_exito = prob_exito;
-    }
-
-    public void setProb_fracaso(double prob_fracaso) {
-        this.prob_fracaso = prob_fracaso;
-    }
-
-    public void setExitos_poblacion(int exitos_poblacion) {
-        this.exitos_poblacion = exitos_poblacion;
-    }
-
-    public int getPoblacion() {
-        return poblacion;
-    }
-
-    public int getMuestra() {
-        return muestra;
-    }
-
-    public int getExitos_rango() {
-        return exitos_rango;
-    }
-
-    public double getProb_exito() {
-        return prob_exito;
-    }
-
-    public double getProb_fracaso() {
-        return prob_fracaso;
-    }
-
-    public int getExitos_poblacion() {
-        return exitos_poblacion;
-    }
-    
-    public double calcular_sesgo(){
-        double numerador = getProb_fracaso() - getProb_exito();
-        double denominador = Math.sqrt((getMuestra() * getProb_exito() * getProb_fracaso()));
-        
-        double resultado = numerador / denominador;
-        
-        return resultado;
-    }
-    
-    public double calcular_cortosis(){
-        double numerador = 1- (6*getProb_exito() * getProb_fracaso());
-        double denominador = Math.sqrt((getMuestra() * getProb_exito() * getProb_fracaso()));
-        double resultado = 3 + (numerador / denominador);
-        
-        
-        return resultado;
-    }
-    
-    public String verificacion(){
-        double valor = getMuestra() / getPoblacion();
-        
-        if (valor >= 0.2){
-            return "HIPERGEOMETRICA";
+        if (muestra == 0 || p == 0 || q == 0) {
+            throw new ArithmeticException("No se puede calcular el sesgo con valores nulos o cero.");
         }
-        return "BINOMIAL";
-        
+
+        return (q - p) / Math.sqrt(muestra * p * q);
     }
 
-    
+    // Método para calcular curtosis
+    public double curtosis() {
+        double p = getProb_exito();
+        double q = getProb_fracaso();
+
+        if (muestra == 0 || p == 0 || q == 0) {
+            throw new ArithmeticException("No se puede calcular la curtosis con valores nulos o cero.");
+        }
+
+        return 3 + (1 - 6 * p * q) / (Math.sqrt(muestra * p * q));
+    }
 }
