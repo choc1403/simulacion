@@ -25,34 +25,40 @@ public class Poisson {
         this.lambda = lambda;
     }
 
-    /**
-     * Calcula la probabilidad de que ocurran exactamente k eventos (P(X = k))
-     * @param k Número de ocurrencias
-     * @return Probabilidad de que X sea exactamente k
-     */
+    // P (X = k ) = e^-lambda * lambda^k / k!
     public double poissonProbability(int k) {
         if (k < 0) return 0;
         return (Math.pow(lambda, k) * Math.exp(-lambda)) / factorial(k);
     }
 
-    /**
-     * Calcula la probabilidad acumulada P(X ≤ k)
-     * @param k Número máximo de ocurrencias
-     * @return Probabilidad acumulada
-     */
-    public double cumulativeProbability(int k) {
-        double sum = 0.0;
+    
+    
+    // Método para calcular la probabilidad acumulada P(X ≤ k)
+    public double probabilidad_menor_igual(int k) {
+        double suma = 0;
         for (int i = 0; i <= k; i++) {
-            sum += poissonProbability(i);
+            suma += poissonProbability(i);
         }
-        return sum;
+        return suma;
+    }
+    
+    // Método para calcular P(X < k)
+    public double probabilidad_menor(int k) {
+        return probabilidad_menor_igual(k - 1);
     }
 
-    /**
-     * Método para calcular el factorial de un número de manera eficiente
-     * @param n Número entero
-     * @return Factorial de n
-     */
+    // Método para calcular P(X ≥ k)
+    public double probabilidad_mayor_igual(int k) {
+        return 1 - probabilidad_menor(k);
+    }
+
+    // Método para calcular P(X > k)
+    public double probabilidad_mayor(int k) {
+        return 1 - probabilidad_menor_igual(k);
+    }
+    
+
+    
     private long factorial(int n) {
         if (n == 0 || n == 1) return 1;
         long fact = 1;
@@ -62,11 +68,7 @@ public class Poisson {
         return fact;
     }
 
-    /**
-     * Devuelve un valor aleatorio generado según la distribución de Poisson
-     * usando el método de Knuth
-     * @return Número aleatorio que sigue la distribución de Poisson
-     */
+    
     public int generateRandomPoisson() {
         Random random = new Random();
         double L = Math.exp(-lambda);

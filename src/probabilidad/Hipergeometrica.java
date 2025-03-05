@@ -39,15 +39,28 @@ public class Hipergeometrica {
         return (combination(K, k) * combination(N - K, n - k)) / (double) combination(N, n);
     }
 
-    /**
-     * Calcula la probabilidad acumulada P(X ≤ k)
-     */
-    public double cumulativeProbability(int k) {
-        double sum = 0;
+    // Método para calcular la probabilidad acumulada P(X ≤ k)
+    public double probabilidad_menor_igual(int k) {
+        double suma = 0;
         for (int i = 0; i <= k; i++) {
-            sum += hypergeometricProbability(i);
+            suma += hypergeometricProbability(i);
         }
-        return sum;
+        return suma;
+    }
+    
+    // Método para calcular P(X < k)
+    public double probabilidad_menor(int k) {
+        return probabilidad_menor_igual(k - 1);
+    }
+
+    // Método para calcular P(X ≥ k)
+    public double probabilidad_mayor_igual(int k) {
+        return 1 - probabilidad_menor(k);
+    }
+
+    // Método para calcular P(X > k)
+    public double probabilidad_mayor(int k) {
+        return 1 - probabilidad_menor_igual(k);
     }
 
     /**
@@ -69,25 +82,6 @@ public class Hipergeometrica {
         return fact;
     }
 
-    /**
-     * Genera un número aleatorio siguiendo la distribución hipergeométrica
-     */
-    public int generateRandomHypergeometric() {
-        Random random = new Random();
-        int successCount = 0;
-
-        int remainingK = K;
-        int remainingN = N;
-
-        for (int i = 0; i < n; i++) {
-            if (random.nextDouble() < (double) remainingK / remainingN) {
-                successCount++;
-                remainingK--;
-            }
-            remainingN--;
-        }
-
-        return successCount;
-    }
+    
     
 }

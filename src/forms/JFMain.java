@@ -100,7 +100,7 @@ public class JFMain extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(126, Short.MAX_VALUE)
+                .addContainerGap(32, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jButton1)
@@ -177,7 +177,7 @@ public class JFMain extends javax.swing.JFrame {
                 .addComponent(jButton1)
                 .addGap(5, 5, 5)
                 .addComponent(jLabel5)
-                .addContainerGap(94, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         pack();
@@ -187,31 +187,7 @@ public class JFMain extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
 
-        int poblacion = 0, muestra = 0, exitos_rango = 0, exitos_poblacion = 0;
-        double prob_exito = 0, prob_fracaso = 0;
-
-        try {
-            poblacion = jtxtNN.getText().isEmpty() ? 0 : Integer.parseInt(jtxtNN.getText());
-            muestra = jtxtN.getText().isEmpty() ? 0 : Integer.parseInt(jtxtN.getText());
-            exitos_rango = jtxtX.getText().isEmpty() ? 0 : Integer.parseInt(jtxtX.getText());
-            exitos_poblacion = jtxtK.getText().isEmpty() ? 0 : Integer.parseInt(jtxtK.getText());
-            prob_exito = jtxtP.getText().isEmpty() ? 0 : Double.parseDouble(jtxtP.getText());
-            prob_fracaso = jtxtQ.getText().isEmpty() ? 0 : Double.parseDouble(jtxtQ.getText());
-        } catch (NumberFormatException e) {
-            System.err.println("Error: Ingrese valores numéricos válidos.");
-            return; // Detiene la ejecución si hay un error en la conversión
-        }
-
-        // Evitar división por cero
-        double verificacion_formula = (poblacion != 0) ? ((double) muestra / poblacion) : 0;
-
-        if (verificacion_formula >= 0.2) {
-            System.out.println("HIPERGEOMETRICA");
-            //c_hipergeometrica( poblacion,  muestra,  exitos_rango,  exitos_poblacion);
-        } else {
-            System.out.println("BINOMIAL");
-            //c_binomial( poblacion,  muestra,  exitos_rango,  prob_exito,  prob_fracaso);
-        }
+        JOptionPane.showMessageDialog(rootPane, "Hola");
 
 
     }//GEN-LAST:event_jButton1ActionPerformed
