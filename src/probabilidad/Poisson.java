@@ -69,18 +69,12 @@ public class Poisson {
     }
 
     
-    public int generateRandomPoisson() {
-        Random random = new Random();
-        double L = Math.exp(-lambda);
-        double p = 1.0;
-        int k = 0;
-
-        do {
-            k++;
-            p *= random.nextDouble();
-        } while (p > L);
-
-        return k - 1;
+    public double poblacion_finita(double desviacion, int muestra, int poblacion){
+        return (double)( desviacion /Math.sqrt(muestra)) * (Math.sqrt((poblacion - muestra) / (poblacion -1)));
+    }
+    
+    public double poblacion_infinita(double desviacion, int muestra){
+        return (double) (desviacion / Math.sqrt(muestra));
     }
 
     
@@ -89,8 +83,17 @@ public class Poisson {
     }
 
     
-    public double varianza(){
-        return lambda;
+    public double desviacion_estandar(int x, double media, int n){
+        double suma = 0;
+        
+        for (int i = 0; i <= x; i++) {
+            suma += Math.pow(i - media, 2);
+        }
+        
+        
+        
+        
+        return Math.sqrt(suma/n);
     }
     
 }

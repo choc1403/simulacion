@@ -12,6 +12,15 @@ public class Datos {
     private double prob_exito = -1; // Inicializamos en -1 para indicar que no se ha calculado
     private double prob_fracaso = -1;
     private int exitos_poblacion = 0; 
+    private double lambda = 0;
+
+    public double getLambda() {
+        return lambda;
+    }
+
+    public void setLambda(double lambda) {
+        this.lambda = lambda;
+    }
 
     public Datos() {
     }

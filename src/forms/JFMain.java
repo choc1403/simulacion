@@ -1,9 +1,9 @@
-
 package forms;
 
 import probabilidad.Datos;
 import probabilidad.Hipergeometrica;
 import probabilidad.Binomial;
+import probabilidad.Poisson;
 import forms.JFBinomial;
 import javax.swing.*;
 import java.awt.*;
@@ -11,12 +11,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.table.DefaultTableModel;
 
-
 public class JFMain extends javax.swing.JFrame {
 
     /**
      * Creates new form JFMain
      */
+    Datos datos = new Datos();
+
+    public void asignacion_valores_distribucion_poisson(double lambda, int k) {
+        Poisson poisson = new Poisson(lambda);
+
+    }
+
     public JFMain() {
         initComponents();
         ButtonGroup grupoBotones = new ButtonGroup();
@@ -26,10 +32,6 @@ public class JFMain extends javax.swing.JFrame {
         grupoBotones.add(jrAcu);
         grupoBotones.add(jrAMayor);
     }
-
-    
-
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -188,13 +190,72 @@ public class JFMain extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
 
-        double p = jtxtP.getText().isEmpty() ? 0 : Double.parseDouble(jtxtP.getText());
-        double q = jtxtQ.getText().isEmpty() ? 0 : Double.parseDouble(jtxtQ.getText());
-        int n = jtxt_n.getText().isEmpty() ? 0 : Integer.parseInt(jtxt_n.getText());
-        int x = jtxtX.getText().isEmpty() ? 0 : Integer.parseInt(jtxtX.getText());
-        int N =  jtxtN.getText().isEmpty() ? 0 : Integer.parseInt(jtxtN.getText());
-        int k = jtxtK.getText().isEmpty() ? 0 : Integer.parseInt(jtxtK.getText());
-        int lambda = jtxtLambda.getText().isEmpty() ? 0 : Integer.parseInt(jtxtLambda.getText());
+        try {
+            // Obtener valores de los campos de texto
+            double p = jtxtP.getText().trim().isEmpty() ? 0 : Double.parseDouble(jtxtP.getText().trim());
+            double q = jtxtQ.getText().trim().isEmpty() ? 0 : Double.parseDouble(jtxtQ.getText().trim());
+            double lambda = jtxtLambda.getText().trim().isEmpty() ? 0 : Double.parseDouble(jtxtLambda.getText().trim());
+
+            int n = jtxt_n.getText().trim().isEmpty() ? 0 : Integer.parseInt(jtxt_n.getText().trim());
+            int x = jtxtX.getText().trim().isEmpty() ? 0 : Integer.parseInt(jtxtX.getText().trim());
+            int N = jtxtN.getText().trim().isEmpty() ? 0 : Integer.parseInt(jtxtN.getText().trim());
+            int k = jtxtK.getText().trim().isEmpty() ? 0 : Integer.parseInt(jtxtK.getText().trim());
+
+            // Asignar valores a la clase Datos
+            datos.setPoblacion(N);
+            datos.setMuestra(n);
+            datos.setProb_exito(p);
+            datos.setProb_fracaso(q);
+            datos.setExitos_rango(x);
+            datos.setExitos_poblacion(k);
+
+            if (N != 0) {
+                double verificacion_distribucion = (double) n / N; // Corregido para evitar división entera
+
+                if (verificacion_distribucion >= 0.2) {
+                    JOptionPane.showMessageDialog(rootPane, "Distribución Hipergeométrica");
+                } else {
+                    double media = n * p;
+                    lambda = media;
+
+                    if (p < 0.1 || media < 10) {
+                        JOptionPane.showMessageDialog(rootPane, "Distribución de Poisson");
+
+                        if (k == 0 && x == 0) {
+                            JOptionPane.showMessageDialog(rootPane, "Error: Debes ingresar valores de k o x.");
+                            return;
+                        }
+                        k = (k != 0) ? k : x;  // Si k es 0, usa x como respaldo
+
+                        asignacion_valores_distribucion_poisson(lambda, k);
+                    } else {
+                        JOptionPane.showMessageDialog(rootPane, "Distribución Binomial");
+                    }
+                }
+            } else {
+                double media = n * p;
+                lambda = media;
+
+                if (p < 0.1 || media < 10) {
+                    JOptionPane.showMessageDialog(rootPane, "Distribución de Poisson");
+
+                    if (k == 0 && x == 0) {
+                        JOptionPane.showMessageDialog(rootPane, "Error: Debes ingresar valores de k o x.");
+                        return;
+                    }
+                    k = (k != 0) ? k : x;  // Si k es 0, usa x como respaldo
+
+                    asignacion_valores_distribucion_poisson(lambda, k);
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "Distribución Binomial");
+                }
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(rootPane, "Error: Ingrese valores numéricos válidos.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Ocurrió un error: " + e.getMessage());
+        }
 
 
     }//GEN-LAST:event_jButton1ActionPerformed
